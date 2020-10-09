@@ -46,8 +46,9 @@ class LibtinsConan(ConanFile):
         if self.options.enable_wpa2:
             self.requires("openssl/1.0.2u")
         if self.options.enable_ack_tracker or self.options.enable_tcp_stream_custom_data:
-            self.requires("boost_icl/1.69.0@bincrafters/stable")
-            self.requires("boost_any/1.69.0@bincrafters/stable")
+            #self.requires("boost_icl/1.69.0@bincrafters/stable")
+            #self.requires("boost_any/1.69.0@bincrafters/stable")
+            self.requires('boost/1.73.0')
             
     def source(self):
         sha256sum = "a9fed73e13f06b06a4857d342bb30815fa8c359d00bd69547e567eecbbb4c3a1"
