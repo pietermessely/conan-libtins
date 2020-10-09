@@ -44,7 +44,7 @@ class LibtinsConan(ConanFile):
             else:
                 self.requires("libpcap/1.9.1")
         if self.options.enable_wpa2:
-            self.requires("openssl/1.0.2u")
+            self.requires("openssl/1.1.1h")
         if self.options.enable_ack_tracker or self.options.enable_tcp_stream_custom_data:
             #self.requires("boost_icl/1.69.0@bincrafters/stable")
             #self.requires("boost_any/1.69.0@bincrafters/stable")
