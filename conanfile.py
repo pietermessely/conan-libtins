@@ -90,3 +90,5 @@ class LibtinsConan(ConanFile):
             self.cpp_info.defines.append("TINS_STATIC")
         if self.settings.os == "Windows":
             self.cpp_info.libs.append("Iphlpapi")
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.append("ibverbs") # pim: had to add it since we moved to gcc 10
