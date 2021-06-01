@@ -40,15 +40,13 @@ class LibtinsConan(ConanFile):
     def requirements(self):
         if self.options.enable_pcap:
             if self.settings.os == "Windows":
-                self.requires("winpcap/4.2.3@bincrafters/stable")
+                self.requires("winpcap/4.1.3@bincrafters/stable")
             else:
                 self.requires("libpcap/1.9.1")
         if self.options.enable_wpa2:
-            self.requires("openssl/1.1.1h")
+            self.requires("openssl/1.1.1k")
         if self.options.enable_ack_tracker or self.options.enable_tcp_stream_custom_data:
-            #self.requires("boost_icl/1.69.0@bincrafters/stable")
-            #self.requires("boost_any/1.69.0@bincrafters/stable")
-            self.requires('boost/1.73.0')
+            self.requires('boost/1.76.0')
             
     def source(self):
         sha256sum = "a9fed73e13f06b06a4857d342bb30815fa8c359d00bd69547e567eecbbb4c3a1"
@@ -90,5 +88,3 @@ class LibtinsConan(ConanFile):
             self.cpp_info.defines.append("TINS_STATIC")
         if self.settings.os == "Windows":
             self.cpp_info.libs.append("Iphlpapi")
-        if self.settings.os == "Linux":
-            self.cpp_info.libs.append("ibverbs") # pim: had to add it since we moved to gcc 10
