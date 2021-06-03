@@ -3,7 +3,7 @@ import os
 
 class LibtinsConan(ConanFile):
     name = "libtins"
-    version = "4.2"
+    version = "4.3mod"
     author = "mfontanini"
     description = "High-level, multiplatform C++ network packet sniffing and crafting library"
     topics = ("conan", "libpcap", "winpcap", "pcap", "networking", "packets")
@@ -49,14 +49,19 @@ class LibtinsConan(ConanFile):
             self.requires('boost/1.76.0')
             
     def source(self):
-        sha256sum = "a9fed73e13f06b06a4857d342bb30815fa8c359d00bd69547e567eecbbb4c3a1"
-        tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version), sha256=sha256sum)
-        extracted_dir = self.name + "-" + self.version
-        os.rename(extracted_dir, self._source_subfolder)
-        tools.replace_in_file(
-            "{0}/src/CMakeLists.txt".format(self._source_subfolder), 
-            "    EXPORT libtinsTargets\n",
-            "    EXPORT libtinsTargets\n" +             "    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}\n")
+        if True: # if running from own customized version
+                git=tools.Git(folder="libtins")
+                git.clone("https://github.com/pietermessely/libtins.git")
+                os.rename("libtins", self._source_subfolder)
+        else:
+            sha256sum = "a9fed73e13f06b06a4857d342bb30815fa8c359d00bd69547e567eecbbb4c3a1"
+            tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version), sha256=sha256sum)
+            extracted_dir = self.name + "-" + self.version
+            os.rename(extracted_dir, self._source_subfolder)                
+            tools.replace_in_file(
+                "{0}/src/CMakeLists.txt".format(self._source_subfolder), 
+                "    EXPORT libtinsTargets\n",
+                "    EXPORT libtinsTargets\n" +             "    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}\n")
 
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -72,11 +77,7 @@ class LibtinsConan(ConanFile):
         cmake.definitions["LIBTINS_BUILD_EXAMPLES"] = False
         cmake.configure()
         return cmake
-
-    def configure(self):
-        self.options["boost"].without_fiber = True # needed because under windows it fails otherwise, see setup instructions windows
-
-
+        
     def build(self):
         cmake = self._configure_cmake()
         cmake.build()
