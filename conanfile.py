@@ -72,7 +72,11 @@ class LibtinsConan(ConanFile):
         cmake.definitions["LIBTINS_BUILD_EXAMPLES"] = False
         cmake.configure()
         return cmake
-        
+
+    def configure(self):
+        self.options["boost"].without_fiber = True # needed because under windows it fails otherwise, see setup instructions windows
+
+
     def build(self):
         cmake = self._configure_cmake()
         cmake.build()
