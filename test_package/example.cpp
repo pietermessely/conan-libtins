@@ -1,6 +1,7 @@
 //#include "hello.h"
 #include <iostream>
 #include <tins/network_interface.h>
+#include <tins/config.h>
 #include <tins/sniffer.h>
 #include <tins/pdu.h>
 #include <tins/rawpdu.h>
@@ -8,6 +9,9 @@
 //
 int main() {
     //hello();
+    
+    std::cout << "LibTins V" << TINS_VERSION_MAJOR << "." << TINS_VERSION_MINOR << "." << TINS_VERSION_PATCH << std::endl;
+    
     Tins::NetworkInterface iface = Tins::NetworkInterface::default_interface();
     std::cout << "We select interface with name: " << iface.name() << std::endl;
     
