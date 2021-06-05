@@ -25,7 +25,7 @@ class LibtinsConan(ConanFile):
         "enable_tcp_stream_custom_data": [True, False]
     }
     default_options = {
-        "shared": True, 
+        "shared": False, 
         "enable_pcap": True, 
         "enable_cxx11": True,
         "enable_dot11": True,
@@ -74,7 +74,7 @@ class LibtinsConan(ConanFile):
         cmake.definitions["LIBTINS_ENABLE_ACK_TRACKER"] = self.options.enable_ack_tracker
         cmake.definitions["LIBTINS_ENABLE_TCP_STREAM_CUSTOM_DATA"] = self.options.enable_tcp_stream_custom_data
         cmake.definitions["LIBTINS_BUILD_TESTS"] = False
-        cmake.definitions["LIBTINS_BUILD_EXAMPLES"] = False
+        cmake.definitions["LIBTINS_BUILD_EXAMPLES"] = True
         cmake.configure()
         return cmake
         
